@@ -1,7 +1,7 @@
 import Api from "./baseApi";
 
-export const getFavoriteFoods = () => {
-  return Api.get("/favorites")
+export const getFavoriteFoods = (userId) => {
+  return Api.get(`/favorites/${userId}`)
     .then(response => {
       // Xử lý dữ liệu trả về từ response ở đây
       return response.data;
