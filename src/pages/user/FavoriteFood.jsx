@@ -3,11 +3,14 @@ import { getFavoriteFoods } from "../../apis/favoriteApi";
 import FavoriteFoodCard from "../../components/FavoriteFoodCard.jsx";
 import { SearchOutlined } from "@ant-design/icons";
 const FavoriteFood = () => {
+  const user = localStorage.getItem("userLogin");
+  const userData = JSON.parse(user);
   const [favorites, setFavorites] = useState([]);
   const fetchFavoriteFoods = async () => {
-    const response = await getFavoriteFoods();
+    const response = await getFavoriteFoods(userData.id);
+    console.log(response);
     if (response.success) {
-      setFavorites(response.favoriteFoods);
+        setFavorites(response.favoriteFoods);
     }
   };
 

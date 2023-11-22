@@ -2,9 +2,9 @@ import { DeleteOutlined, StarFilled } from "@ant-design/icons";
 
 const FavoriteFoodCard = (props) => {
   // eslint-disable-next-line react/prop-types
-  const name = props.food.foodName;
+  const name = props.food?.foodName;
   // eslint-disable-next-line react/prop-types
-  const description = props.food.foodDescription;
+  const description = props.food?.foodDescription;
   return (
     <div className="grid grid-cols-3 p-2 bg-slate-200 rounded-lg shadow-lg p-2 mt-3">
       <div className="flex">
