@@ -5,9 +5,10 @@ import {
   HeartOutlined,
   ShareAltOutlined,
   BugOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Navigate, Outlet } from "react-router-dom";
 import path from "../../utils/path";
 const { Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -18,6 +19,12 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
+
+const logout = () => {
+  localStorage.removeItem("userLogin");
+  window.location.href("/login");
+};
+
 const items = [
   getItem(
     "HOME",
@@ -54,12 +61,30 @@ const items = [
       <BugOutlined />
     </NavLink>
   ),
+  getItem(
+    "LOGOUT",
+    "6",
+    <NavLink className=" text-black font-semibold" onClick={logout}>
+      <LogoutOutlined />
+    </NavLink>
+  ),
 ];
 const DashBoardUser = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
+
+  if (!userLogin) {
+    return <Navigate to="/login" />;
+  }
+
+  if (userLogin.isAdmin) {
+    return <Navigate to="/admin" />;
+  }
+
   return (
     <Layout
       style={{
@@ -76,11 +101,7 @@ const DashBoardUser = () => {
             LOGO
           </span>
         </NavLink>
-        <Menu
-          theme="dark"
-          defaultSelectedKeys={["1"]}
-          items={items}
-        />
+        <Menu theme="dark" defaultSelectedKeys={["1"]} items={items} />
       </Sider>
       <Layout>
         <Content

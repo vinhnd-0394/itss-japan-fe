@@ -6,7 +6,7 @@ import {
   PlusCircleOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Navigate, Outlet } from "react-router-dom";
 import path from "../../utils/path";
 const { Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -52,6 +52,17 @@ const DashBoardAdmin = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
+
+  if (!userLogin) {
+    return <Navigate to="/login" />;
+  }
+
+  if (!userLogin.isAdmin) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <Layout
       style={{
