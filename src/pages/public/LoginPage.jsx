@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { login } from "../../apis/authApi";
-import "react-toastify/dist/ReactToastify.css";
+// import "react-toastify/dist/ReactToastify.css";
 import path from "../../utils/path";
 const LoginPage = () => {
   const [username, setUsername] = useState("");
