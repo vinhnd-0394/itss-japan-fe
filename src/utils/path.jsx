@@ -8,7 +8,7 @@ const path = {
   SEARCH_PAGE: "/search",
   REPORT_PAGE: "/report",
   FAVORITE_PAGE: "/favorite",
-  DETAIL_FOOD: "/detail-food",
+  DETAIL_FOOD: "/detail-food/:foodId",
   SHARE_RECIPE: "/search-recipe",
 
   // ADMIN

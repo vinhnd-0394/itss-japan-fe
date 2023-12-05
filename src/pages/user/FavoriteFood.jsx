@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Fragment, useEffect, useState } from "react";
 import { getFavoriteFoods } from "../../apis/favoriteApi";
 import FavoriteFoodCard from "../../components/FavoriteFoodCard.jsx";
@@ -8,7 +9,6 @@ const FavoriteFood = () => {
   const [favorites, setFavorites] = useState([]);
   const fetchFavoriteFoods = async () => {
     const response = await getFavoriteFoods(userData.id);
-    console.log(response);
     if (response.success) {
         setFavorites(response.favoriteFoods);
     }

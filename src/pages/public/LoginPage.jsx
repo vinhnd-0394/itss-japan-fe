@@ -25,9 +25,9 @@ const LoginPage = () => {
       setUsername("");
       setPassword("");
       if (response.data.isAdmin) {
-        navigate("/admin");
+        navigate(path.ADMIN_SEARCH_PAGE);
       } else {
-        navigate("/");
+        navigate(path.HOME);
       }
     }
   };
