@@ -4,6 +4,7 @@ import {
   FundOutlined,
   ShareAltOutlined,
   PlusCircleOutlined,
+  LogoutOutlined
 } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
 import { NavLink, Navigate, Outlet } from "react-router-dom";
@@ -17,6 +18,12 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
+
+const logout = () => {
+  localStorage.removeItem("userLogin");
+  window.location.href("/login");
+};
+
 const items = [
   getItem(
     "SEARCH",
@@ -44,6 +51,13 @@ const items = [
     "4",
     <NavLink to={path.ADMIN_NEW_RECIPE} className=" text-black font-semibold">
       <PlusCircleOutlined />
+    </NavLink>
+  ),
+  getItem(
+    "LOGOUT",
+    "6",
+    <NavLink className=" text-black font-semibold" onClick={logout}>
+      <LogoutOutlined />
     </NavLink>
   ),
 ];
