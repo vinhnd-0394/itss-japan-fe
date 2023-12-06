@@ -64,22 +64,93 @@ const SearchPage = () => {
             <SearchOutlined className="w-4 h-4 text-gray-500 dark:text-gray-400" />
           </div>
           <input
-            type="search"
-            id="default-search"
-            value={foodname}
-            onChange={handleFoodnameChange}
-            className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Search your favorite food"
-            required
+            type="text"
+            value={ingredientValue}
+            onChange={(e) => setIngredientValue(e.target.value)}
+            onFocus={() => setShowSelectTags(true)}
+            className="block w-full p-2 ps-10 text-base text-black border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            placeholder="Enter your ingredients"
           />
-          <button
-            type="submit"
-            className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Search
-          </button>
+          <div className="absolute mt-1 flex flex-col w-full bg-white shadow-md shadow-gray-500 rounded overflow-y-auto max-h-[300px]">
+            {showSelectTags &&
+              ingredients
+                ?.filter((ingredient) =>
+                  ingredient.ingredientName.includes(ingredientValue)
+                )
+                ?.filter(
+                  (ingredient) =>
+                    !ingredientTags.some((item) => item.id === ingredient.id)
+                )
+                ?.map((ingredient) => (
+                  <button
+                    className="text-left px-2 py-1 hover:bg-gray-300"
+                    value={ingredient.ingredientName}
+                    key={ingredient.id}
+                    onClick={() => addTagsSelect(ingredient)}
+                  >
+                    {ingredient.ingredientName}
+                  </button>
+                ))}
+          </div>
         </div>
-      </form>
+        <div className="flex flex-wrap gap-4">
+          {ingredientTags.map((ingredient, index) => {
+            return (
+              <span
+                className=" bg-blue-700 rounded-md p-2 m-1 text-white flex items-center"
+                key={index}
+              >
+                <span>{ingredient.ingredientName}</span>
+                <button
+                  className="ml-2 text-black flex items-center justify-center rounded-full bg-white w-[15px] h-[15px]"
+                  onClick={() => removeTags(ingredient)}
+                >
+                  x
+                </button>
+              </span>
+            );
+          })}
+        </div>
+        <button
+          className="my-5 bg-blue-500 rounded-md p-2 text-white text-center font-bold"
+          onClick={fetchRecipes}
+        >
+          Search
+        </button>
+      </div>
+      <div className="px-4 w-2/3 flex flex-col text-lg gap-y-4 bg-white">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            fetchRecipes();
+          }}
+        >
+          <div className="relative w-full">
+            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              <SearchOutlined className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+            </div>
+            <input
+              type="text"
+              value={foodNameValue}
+              onChange={(e) => setFoodNameValue(e.target.value)}
+              className="block w-full p-2 ps-10 text-base text-black border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 outline-none"
+              placeholder="Enter food name"
+            />
+          </div>
+        </form>
+        <div className="max-h-[750px] overflow-y-auto flex flex-col gap-4">
+          {recipes?.map((item) => {
+            return (
+              <FoodSearchCard
+                key={item.id}
+                foodName={item.food.foodName}
+                foodId={item.food.id}
+                foodDescription={item.food.foodDescription}
+              />
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 };
