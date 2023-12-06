@@ -15,6 +15,7 @@ import ShareRecipe from "./pages/user/ShareRecipe";
 import AddNewRecipe from "./pages/admin/AddNewRecipe";
 import Suggestion from "./pages/admin/Suggestion";
 import UserRecipes from "./pages/admin/UserRecipes";
+import DetailFood from "./pages/user/DetailFood";
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
         <Route path={path.FORGOT_PASSWORD} element={<ForgotPassword />} />
         <Route path={path.HOME} element={<DashBoardUser />}>
           <Route path={path.HOME} element={<HomePage />} />
+          <Route path={path.DETAIL_FOOD} element={<DetailFood />} />
           <Route path={path.SEARCH_PAGE} element={<SearchPage />} />
           <Route path={path.FAVORITE_PAGE} element={<FavoriteFood />} />
           <Route path={path.REPORT_PAGE} element={<ReportPage />} />
