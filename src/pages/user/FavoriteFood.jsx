@@ -10,14 +10,14 @@ const FavoriteFood = () => {
   const fetchFavoriteFoods = async () => {
     const response = await getFavoriteFoods(userData.id);
     if (response.success) {
-        setFavorites(response.favoriteFoods);
+      setFavorites(response.favoriteFoods);
     }
   };
 
   useEffect(() => {
     fetchFavoriteFoods();
   }, []);
-
+  console.log(favorites);
   return (
     <Fragment>
       <div className="p-2">
