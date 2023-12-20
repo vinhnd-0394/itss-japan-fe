@@ -18,7 +18,13 @@ const HomePage = () => {
       <h2 className="font-bold text-xl mb-3">Suggestion for your meal</h2>
       <div className="grid grid-cols-3 gap-4">
         {foods.length > 0 ? (
-          foods.map((food) => <FoodSuggestionCard key={food.id} food={food} />)
+          foods.map((food) => (
+            <FoodSuggestionCard
+              key={food.id}
+              food={food}
+              fetchFoodSuggestions={fetchFoodSuggestions}
+            />
+          ))
         ) : (
           <p>No food suggestions available</p>
         )}

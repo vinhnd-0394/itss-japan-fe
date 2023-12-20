@@ -1,15 +1,19 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useEffect, useRef, useState } from "react";
 import { getAllIngredients } from "../../apis/ingredientApi";
-import { createRecipe, getAllRecipes } from "../../apis/recipeApi";
+import { createRecipe } from "../../apis/recipeApi";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const ShareRecipe = () => {
   const [recipeName, setRecipeName] = useState("");
-
   const [ingredients, setIngredients] = useState([]);
-  const [showAlert, setShowAlert] = useState(false);
   const [ingredientValue, setIngredientValue] = useState("");
+  const [foodName, setFoodName] = useState("");
+  const [foodDescription, setFoodDescription] = useState("");
   const [showSelectTags, setShowSelectTags] = useState(false);
   const [ingredientTags, setIngredientTags] = useState([]);
   const inputTagRef = useRef(null);
+  const [selectedImage, setSelectedImage] = useState(null);
   const fetchAllIngredients = async () => {
     const response = await getAllIngredients();
     if (response.success) {
@@ -38,7 +42,6 @@ const ShareRecipe = () => {
     const newTags = ingredientTags.filter((tag) => tag.id !== ingredient.id);
     setIngredientTags(newTags);
   };
-  const [selectedImage, setSelectedImage] = useState(null);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -50,48 +53,83 @@ const ShareRecipe = () => {
       setSelectedImage(null);
     }
   };
-  const ingredientStrings = ingredientTags.map(
-    (ingredient) => ingredient.ingredientName
-  );
-
-  const ingredientsString = ingredientStrings.join(", ");
   const fetchCreateRecipe = async () => {
-    setShowAlert(true);
     let userLogin = localStorage.getItem("userLogin");
     userLogin = JSON.parse(userLogin);
     const author = userLogin.id;
+    const food = { foodName, foodDescription };
     const response = await createRecipe(
       recipeName,
       author,
-      ingredientsString,
-      1
+      ingredientTags,
+      food
     );
-    setTimeout(() => {
-      setShowAlert(false);
-    }, 3000);
-    console.log(response);
-    // window.location.reload();
+    if (response.success) {
+      notifySuccess();
+      handlelReset();
+    } else {
+      notifyError();
+    }
   };
-  const handleCancelClick = () => {
-    window.location.reload();
+  const handlelReset = () => {
+    setFoodDescription("");
+    setFoodName("");
+    setIngredientTags([]);
+    setIngredientValue("");
+    setRecipeName("");
+    setSelectedImage("");
+    setShowSelectTags([]);
   };
+
+  const notifySuccess = () =>
+    toast.success("Success", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+
+  const notifyError = () =>
+    toast.error("Error", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
   return (
     <div>
-      <div>
-        {showAlert && (
-          <div className="fixed top-0 right-0 bg-green-500 text-white p-4 m-4 rounded">
-            Create recipe successfully!
-          </div>
-        )}
-      </div>
       <div className="flex justify-center flex-col">
         <h1 className="text-2xl mb-2">Recipe's Name:</h1>
         <input
           type="text"
           value={recipeName}
           onChange={(e) => setRecipeName(e.target.value)}
-          placeholder="Enter the recipe'name"
-          className="border bg-gray-300 p-3 w-11/12 rounded-md text-xl"
+          placeholder="Enter the recipe name"
+          className="block w-11/12 p-3 text-base text-black border border-gray-300 rounded-lg mb-2 bg-gray-300 focus:ring-blue-500 focus:border-blue-500 outline-none"
+        />
+        <h1 className="text-2xl mb-2">Food Name:</h1>
+        <input
+          type="text"
+          value={foodName}
+          onChange={(e) => setFoodName(e.target.value)}
+          placeholder="Enter the food name"
+          className="block w-11/12 p-3 text-base text-black border border-gray-300 rounded-lg mb-2 bg-gray-300 focus:ring-blue-500 focus:border-blue-500 outline-none"
+        />
+        <h1 className="text-2xl mb-2">Food Description:</h1>
+        <input
+          type="text"
+          value={foodDescription}
+          onChange={(e) => setFoodDescription(e.target.value)}
+          placeholder="Enter the food description"
+          className="block w-11/12 p-3 text-base text-black border border-gray-300 rounded-lg mb-2 bg-gray-300 focus:ring-blue-500 focus:border-blue-500 outline-none"
         />
         <h1 className="text-2xl mb-2 mt-2">Ingredients:</h1>
         <div className="relative w-11/12" ref={inputTagRef}>
@@ -100,7 +138,7 @@ const ShareRecipe = () => {
             value={ingredientValue}
             onChange={(e) => setIngredientValue(e.target.value)}
             onFocus={() => setShowSelectTags(true)}
-            className="block w-full p-3 text-base text-black border border-gray-300 rounded-lg mb-2 bg-gray-300 text-xl focus:ring-blue-500 focus:border-blue-500 outline-none"
+            className="block w-full p-3 text-base text-black border border-gray-300 rounded-lg mb-2 bg-gray-300 focus:ring-blue-500 focus:border-blue-500 outline-none"
             placeholder="Enter your ingredients"
           />
           <div className="absolute mt-1 flex flex-col w-full bg-white shadow-md shadow-gray-500 rounded overflow-y-auto max-h-[150px]">
@@ -143,12 +181,6 @@ const ShareRecipe = () => {
             );
           })}
         </div>
-        <h1 className="text-2xl mb-2">Instruct:</h1>
-        <input
-          type="text"
-          placeholder="1 2 3"
-          className="border bg-gray-300 p-3 w-11/12 rounded-md text-xl"
-        />
         <h1 className="text-2xl mt-2 mb-2">Image (Optional):</h1>
         <input
           type="file"
@@ -175,12 +207,24 @@ const ShareRecipe = () => {
 
           <button
             className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-            onClick={handleCancelClick}
+            onClick={() => window.location.reload()}
           >
             Cancel
           </button>
         </div>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 };

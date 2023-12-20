@@ -17,7 +17,6 @@ const FavoriteFood = () => {
   useEffect(() => {
     fetchFavoriteFoods();
   }, []);
-  console.log(favorites);
   return (
     <Fragment>
       <div className="p-2">

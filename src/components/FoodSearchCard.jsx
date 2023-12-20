@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 const FoodSearchCard = ({ foodName, foodDescription, foodId }) => {
+  const userLogin = JSON.parse(localStorage.getItem("userLogin"));
   return (
     <div className="flex gap-4 p-2 bg-slate-200 rounded-lg shadow-lg">
       <img
@@ -13,7 +14,7 @@ const FoodSearchCard = ({ foodName, foodDescription, foodId }) => {
       <div className="flex flex-col gap-4">
         <Link
           className="font-semibold mb-4 text-2xl"
-          to={`/detail-food/${foodId}`}
+          to={userLogin.isAdmin ? `/admin/detail-food/${foodId}` : `/detail-food/${foodId}`}
         >
           {foodName}
         </Link>

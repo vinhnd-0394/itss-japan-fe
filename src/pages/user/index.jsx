@@ -82,7 +82,7 @@ const DashBoardUser = () => {
   }
 
   if (userLogin.isAdmin) {
-    return <Navigate to="/admin" />;
+    return <Navigate to="/admin/search" />;
   }
 
   return (

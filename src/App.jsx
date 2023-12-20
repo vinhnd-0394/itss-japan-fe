@@ -16,6 +16,7 @@ import AddNewRecipe from "./pages/admin/AddNewRecipe";
 import Suggestion from "./pages/admin/Suggestion";
 import UserRecipes from "./pages/admin/UserRecipes";
 import DetailFood from "./pages/user/DetailFood";
+import DetailFoodAdmin from "./pages/admin/DetailFood";
 
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
         </Route>
         <Route path={path.ADMIN_HOME} element={<DashBoardAdmin />}>
           <Route path={path.ADMIN_SEARCH_PAGE} element={<SearchPageAdmin />} />
+          <Route path={path.ADMIN_DETAIL_FOOD} element={<DetailFoodAdmin />} />
           <Route path={path.ADMIN_USERS_RECIPE} element={<UserRecipes />} />
           <Route path={path.ADMIN_REPORT_PAGE} element={<ReportPageAdmin />} />
           <Route path={path.ADMIN_SUGGESTION} element={<Suggestion />} />

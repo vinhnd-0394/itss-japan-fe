@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getFoodDetail } from "../../apis/foodApi";
@@ -6,6 +7,8 @@ import path from "../../utils/path";
 import { StarFilled } from "@ant-design/icons";
 import CommentCard from "../../components/CommentCard";
 import { createComment, getCommentsByFoodID } from "../../apis/commentApi";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const DetailFood = () => {
   const userLogin = JSON.parse(localStorage.getItem("userLogin"));
   const params = useParams("foodId");
@@ -38,9 +41,12 @@ const DetailFood = () => {
         commentText,
         food_id
       );
+      if(response){
+        notifySuccess()
+      }
       setAddComments(false);
       setComments([...comments, response.comment]);
-      console.log(response);
+
       averageStars += response.comment.star;
       averageStars = (averageStars / comments.length).toFixed(1);
     }
@@ -72,6 +78,19 @@ const DetailFood = () => {
     fetchComments(params.foodId);
     setAveStar(averageStars);
   }, [averageStars]);
+
+  const notifySuccess = () =>
+    toast.success("Success", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+
   return (
     foodDetail && (
       <div className="flex gap-4">
@@ -215,6 +234,18 @@ const DetailFood = () => {
             <p>{foodDetail.foodDescription}</p>
           </div>
         )}
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
       </div>
     )
   );
