@@ -1,0 +1,110 @@
+/* src/Courses.css */
+.courses-container {
+    width: 80%;
+    margin: 0 auto;
+}
+  
+section {
+    margin-bottom: 40px;
+}
+  
+.courses {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+  
+.course-card {
+    background-color: rgba(145, 133, 133, 100);
+    border-radius: 20px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 350px; 
+    height: 350px; 
+    margin: 10px;
+    overflow: hidden;
+    text-align: center;
+}
+  
+.course-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0; 
+}
+  
+.course-info {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+  
+.info-part1 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    text-align: left; 
+    margin-bottom: 10px;
+}
+
+.info-part1 h3 {
+    margin: 0;
+}
+
+.divider {
+    border-bottom: 5px solid white; 
+    width: 50%; 
+    margin: 10px 0; 
+    align-self: flex-start; 
+  }
+  
+.info-part1 p {
+    margin: 0;
+}
+  
+.info-part2 {
+    text-align: center;
+}
+
+.progress-container {
+    background-color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    left: 50px; 
+}
+
+
+.progress {
+    color: black;
+}
+
+.course-info h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: white; 
+}
+
+.course-info p {
+    font-size: 1.1em;
+    color: white; 
+    margin: 10px 0;
+}
+  
+.course-info span {
+    font-size: 0.9em;
+    color: white; 
+}
+  
+.courses-container section h2 {
+    text-align: left; 
+    margin-left: 40px; 
+    color: #007bff; 
+    border-bottom: 2px solid #007bff; 
+    padding-bottom: 20px; 
+    margin-bottom: 40px;
+}
