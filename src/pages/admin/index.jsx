@@ -1,10 +1,9 @@
 import { useState } from "react";
 import {
   SearchOutlined,
-  FundOutlined,
   ShareAltOutlined,
   PlusCircleOutlined,
-  LogoutOutlined
+  LogoutOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
 import { NavLink, Navigate, Outlet } from "react-router-dom";
@@ -21,7 +20,6 @@ function getItem(label, key, icon, children) {
 
 const logout = () => {
   localStorage.removeItem("userLogin");
-  window.location.href("/login");
 };
 
 const items = [
@@ -40,13 +38,6 @@ const items = [
     </NavLink>
   ),
   getItem(
-    "VIEW USER SUGGESTIONS",
-    "3",
-    <NavLink to={path.ADMIN_SUGGESTION} className=" text-black font-semibold">
-      <FundOutlined />
-    </NavLink>
-  ),
-  getItem(
     "ADD NEW RECIPES",
     "4",
     <NavLink to={path.ADMIN_NEW_RECIPE} className=" text-black font-semibold">
@@ -56,7 +47,7 @@ const items = [
   getItem(
     "LOGOUT",
     "6",
-    <NavLink className=" text-black font-semibold" onClick={logout}>
+    <NavLink to={path.LOGIN} className=" text-black font-semibold" onClick={logout}>
       <LogoutOutlined />
     </NavLink>
   ),
@@ -93,11 +84,7 @@ const DashBoardAdmin = () => {
             LOGO
           </span>
         </NavLink>
-        <Menu
-          theme="dark"
-          defaultSelectedKeys={["1"]}
-          items={items}
-        />
+        <Menu theme="dark" defaultSelectedKeys={["1"]} items={items} />
       </Sider>
       <Layout>
         <Content

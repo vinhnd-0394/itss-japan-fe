@@ -42,7 +42,7 @@ const LoginPage = () => {
   }
   return (
     <div className="flex w-screen h-screen items-center justify-center">
-      <img src="./../../../public/image1.png" alt="login" className="w-1/3" />
+      <img src="https://www.nhadepkientruc.net/wp-content/uploads/2019/07/Hinh-anh-nha-bep-don-gian-14-834x1024.jpg" alt="login" className="w-1/5 mx-10" />
       <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
         <div className="w-full p-6 m-auto bg-white rounded-md shadow-xl lg:max-w-xl">
           <h1 className="text-3xl font-semibold">Login</h1>

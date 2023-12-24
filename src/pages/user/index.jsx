@@ -22,7 +22,6 @@ function getItem(label, key, icon, children) {
 
 const logout = () => {
   localStorage.removeItem("userLogin");
-  window.location.href("/login");
 };
 
 const items = [
@@ -64,7 +63,7 @@ const items = [
   getItem(
     "LOGOUT",
     "6",
-    <NavLink className=" text-black font-semibold" onClick={logout}>
+    <NavLink to={path.LOGIN} className=" text-black font-semibold" onClick={logout}>
       <LogoutOutlined />
     </NavLink>
   ),

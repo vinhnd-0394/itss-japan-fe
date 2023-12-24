@@ -49,7 +49,11 @@ const FoodSuggestionCard = (props) => {
         <Link className="font-semibold mb-4 text-2xl" to={`/detail-food/${id}`}>
           {foodName}
         </Link>
-        <p>{foodDescription}</p>
+        <p>
+          {foodDescription.length > 100
+            ? foodDescription.substring(0, 100).concat("...")
+            : foodDescription}
+        </p>
         {renderLikeIcon(favorite)}
       </div>
     </div>

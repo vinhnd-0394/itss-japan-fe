@@ -33,7 +33,6 @@ const DetailFood = () => {
     let userLogin = localStorage.getItem("userLogin");
     userLogin = JSON.parse(userLogin);
     const user_id = userLogin.id;
-    console.log(food_id);
     if (selectedValue !== "?") {
       const response = await createComment(
         user_id,
@@ -41,14 +40,16 @@ const DetailFood = () => {
         commentText,
         food_id
       );
-      if(response){
-        notifySuccess()
-      }
-      setAddComments(false);
-      setComments([...comments, response.comment]);
+      if (Object.keys(response.comment).length) {
+        notifySuccess();
+        setAddComments(false);
+        setComments([...comments, response.comment]);
 
-      averageStars += response.comment.star;
-      averageStars = (averageStars / comments.length).toFixed(1);
+        averageStars += response.comment.star;
+        averageStars = (averageStars / comments.length).toFixed(1);
+      } else {
+        notifyError();
+      }
     }
   };
   const fetchComments = async (foodId) => {
@@ -81,6 +82,17 @@ const DetailFood = () => {
 
   const notifySuccess = () =>
     toast.success("Success", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  const notifyError = () =>
+    toast.error("Error", {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
@@ -193,8 +205,8 @@ const DetailFood = () => {
                 {commentsArray.length > 0 ? (
                   commentsArray
                     .reverse()
-                    .map((comment) => (
-                      <CommentCard key={comment.id} comment={comment} />
+                    .map((comment, index) => (
+                      <CommentCard key={index} comment={comment} />
                     ))
                 ) : (
                   <p>You don't have favorite food</p>

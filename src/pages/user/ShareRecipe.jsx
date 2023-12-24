@@ -14,6 +14,8 @@ const ShareRecipe = () => {
   const [ingredientTags, setIngredientTags] = useState([]);
   const inputTagRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [submit, setSubmit] = useState(false);
+
   const fetchAllIngredients = async () => {
     const response = await getAllIngredients();
     if (response.success) {
@@ -54,6 +56,7 @@ const ShareRecipe = () => {
     }
   };
   const fetchCreateRecipe = async () => {
+    setSubmit(true);
     let userLogin = localStorage.getItem("userLogin");
     userLogin = JSON.parse(userLogin);
     const author = userLogin.id;
@@ -64,9 +67,10 @@ const ShareRecipe = () => {
       ingredientTags,
       food
     );
-    if (response.success) {
+    if (Object.keys(response.recipe).length) {
       notifySuccess();
       handlelReset();
+      setSubmit(false);
     } else {
       notifyError();
     }
@@ -115,6 +119,9 @@ const ShareRecipe = () => {
           placeholder="Enter the recipe name"
           className="block w-11/12 p-3 text-base text-black border border-gray-300 rounded-lg mb-2 bg-gray-300 focus:ring-blue-500 focus:border-blue-500 outline-none"
         />
+        {submit && !recipeName && (
+          <small className="text-red-500">Required!</small>
+        )}
         <h1 className="text-2xl mb-2">Food Name:</h1>
         <input
           type="text"
@@ -123,6 +130,9 @@ const ShareRecipe = () => {
           placeholder="Enter the food name"
           className="block w-11/12 p-3 text-base text-black border border-gray-300 rounded-lg mb-2 bg-gray-300 focus:ring-blue-500 focus:border-blue-500 outline-none"
         />
+        {submit && !foodName && (
+          <small className="text-red-500">Required!</small>
+        )}
         <h1 className="text-2xl mb-2">Food Description:</h1>
         <input
           type="text"
@@ -131,6 +141,9 @@ const ShareRecipe = () => {
           placeholder="Enter the food description"
           className="block w-11/12 p-3 text-base text-black border border-gray-300 rounded-lg mb-2 bg-gray-300 focus:ring-blue-500 focus:border-blue-500 outline-none"
         />
+        {submit && !foodDescription && (
+          <small className="text-red-500">Required!</small>
+        )}
         <h1 className="text-2xl mb-2 mt-2">Ingredients:</h1>
         <div className="relative w-11/12" ref={inputTagRef}>
           <input
@@ -181,6 +194,9 @@ const ShareRecipe = () => {
             );
           })}
         </div>
+        {submit && ingredientTags.length === 0 && (
+          <small className="text-red-500">Required!</small>
+        )}
         <h1 className="text-2xl mt-2 mb-2">Image (Optional):</h1>
         <input
           type="file"
