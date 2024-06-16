@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
@@ -11,8 +10,8 @@ const Header = () => {
         <div className="nav-links">
           <Link to="/toeic-practice">Thi Thử</Link>
           <Link to="/">Lộ Trình Học</Link>
-          <a href="#">Tài Liệu</a>
-          <a href="#">Hỗ Trợ</a>
+          <Link to="/">Tài Liệu</Link>
+          <Link to="/">Hỗ Trợ</Link>
         </div>
       </div>
       <div className="header-right">
